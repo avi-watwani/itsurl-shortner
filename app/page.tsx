@@ -1,4 +1,3 @@
-// app/page.tsx
 'use client'; // Required for using hooks like useState
 
 import { useState } from 'react';
@@ -12,34 +11,42 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleGenerateClick = async () => {
+    // Check if the input is empty
     if (!longUrl) {
       setShortUrlResult('Please enter a URL first.');
       return;
     }
 
+    // Set loading state and clear previous results
     setIsLoading(true);
-    setShortUrlResult(null); // Clear previous results
+    setShortUrlResult(null);
 
-    // --- Placeholder for API Call ---
-    // In future steps, we will replace this timeout with
-    // an actual fetch() call to our API Gateway endpoint.
-    console.log('Simulating API call for:', longUrl);
-    await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
+    try {
+      // Make a POST request to the API Gateway endpoint
+      const response = await fetch('https://itsurl.com/shorten', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ originalUrl: longUrl }), // Send the long URL as "originalUrl"
+      });
 
-    // --- Mocked Success Response ---
-    // Replace this with the actual response later
-    const mockShortCode = Math.random().toString(36).substring(2, 8);
-    // Assuming your final short URL will be served from your custom domain
-    const generatedUrl = `https://mydomain.com/${mockShortCode}`;
-    setShortUrlResult(`Generated: ${generatedUrl}`);
-    // --- Mocked End ---
+      // Check if the response is successful
+      if (!response.ok) {
+        throw new Error('Failed to shorten URL. Please try again.');
+      }
 
-    // --- Example Error Handling (uncomment to test) ---
-    // setShortUrlResult('Error: Could not shorten URL.');
-    // ---
-
-    setIsLoading(false);
-    setLongUrl(''); // Optionally clear the input field after success
+      // Parse the JSON response and extract the shortened URL
+      const data = await response.json();
+      setShortUrlResult(`Generated: ${data.shortUrl}`); // Display the shortened URL
+    } catch (error) {
+      // Handle any errors (network issues, invalid URL, etc.)
+      setShortUrlResult((error as Error).message || 'An error occurred while shortening the URL.');
+    } finally {
+      // Reset loading state and clear the input field
+      setIsLoading(false);
+      setLongUrl(''); // Clear the input after success or failure
+    }
   };
 
   return (
@@ -54,19 +61,19 @@ export default function HomePage() {
             Enter Long URL:
           </label>
           <input
-            type="url" // Use type="url" for basic browser validation
+            type="url" // Browser validation for URL format
             id="longUrl"
             value={longUrl}
             onChange={(e) => setLongUrl(e.target.value)}
             placeholder="https://www.example.com/very/long/url/path"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 placeholder-gray-700"
-            disabled={isLoading} // Disable input while loading
+            disabled={isLoading} // Disable input during API call
           />
         </div>
 
         <button
           onClick={handleGenerateClick}
-          disabled={isLoading} // Disable button while loading
+          disabled={isLoading} // Disable button during API call
           className={`w-full py-2 px-4 rounded-md text-white font-semibold transition-colors duration-200 ease-in-out ${
             isLoading
               ? 'bg-gray-400 cursor-not-allowed'
@@ -76,7 +83,7 @@ export default function HomePage() {
           {isLoading ? 'Generating...' : 'Generate Short URL'}
         </button>
 
-        {/* Display Area for Result or Error */}
+        {/* Display the result or error message */}
         {shortUrlResult && (
           <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-md text-center">
             <p className="text-sm text-gray-800 break-all">{shortUrlResult}</p>
