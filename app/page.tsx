@@ -53,6 +53,7 @@ export default function HomePage() {
   return (
     <main className="flex flex-col min-h-screen bg-[#F9FAFB]">
       <HeroSection />
+      <h2 className="text-3xl font-bold text-center mt-10">Shorten Your URL</h2>
       <Footer />
     </main>
   );
