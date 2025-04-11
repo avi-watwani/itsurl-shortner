@@ -66,7 +66,7 @@ export default function HomePage() {
             value={longUrl}
             onChange={(e) => setLongUrl(e.target.value)}
             placeholder="https://www.example.com/very/long/url/path"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 placeholder-gray-700"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 placeholder-gray-400"
             disabled={isLoading} // Disable input during API call
           />
         </div>
