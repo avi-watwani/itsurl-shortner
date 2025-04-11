@@ -50,8 +50,8 @@ export default function HomePage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <main className="flex min-h-screen flex-col items-center justify-center p-6 sm:p-12 bg-gray-100">
+      <div className="bg-white p-6 sm:p-8 rounded-lg shadow-md w-full max-w-md sm:mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-700">
           Simple URL Shortener
         </h1>
