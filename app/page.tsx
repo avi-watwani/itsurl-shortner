@@ -1,6 +1,7 @@
 'use client'; // Required for using hooks like useState
 
 import { useState } from 'react';
+import { FiCopy } from 'react-icons/fi'; // Import the copy icon from React Icons
 import HeroSection from './components/HeroSection'; // Import the HeroSection component
 
 export default function HomePage() {
@@ -54,7 +55,7 @@ export default function HomePage() {
   return (
     <main className="mx-auto">
       <HeroSection /> {/* Add the HeroSection component here */}
-      <div className="border border-gray-300 rounded-md p-16 w-[70%] mx-auto mt-12">
+      <div id="shorten-form" className="border border-gray-300 rounded-md p-16 w-[70%] mx-auto mt-12">
         <h1 className="text-2xl font-bold mb-8">Shorten Your URL</h1>
         <form className="space-y-4">
           <div>
@@ -95,7 +96,7 @@ export default function HomePage() {
                 onClick={() => copyToClipboard(shortUrlResult)}
                 className="ml-2 text-gray-500 hover:text-gray-700"
               >
-                📋
+                <FiCopy size={16} /> {/* Use the standard copy icon */}
               </button>
             </div>
           </div>
