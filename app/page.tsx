@@ -52,11 +52,11 @@ export default function HomePage() {
 
   return (
     <main className="container mx-auto p-4">
-      <div className="border border-gray-300 rounded-md p-4 w-[70%] mx-auto">
-        <h1 className="text-2xl font-bold mb-4">Shorten Your URL</h1>
+      <div className="border border-gray-300 rounded-md p-16 w-[70%] mx-auto">
+        <h1 className="text-2xl font-bold mb-8">Shorten Your URL</h1>
         <form className="space-y-4">
           <div>
-            <label htmlFor="longUrl" className="block text-sm font-medium text-gray-900 mb-1">
+            <label htmlFor="longUrl" className="block text-mb font-medium text-gray-900 mb-1">
               Enter a long URL
             </label>
             <input
