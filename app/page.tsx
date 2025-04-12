@@ -9,49 +9,45 @@ export default function HomePage() {
   const [shortUrlResult, setShortUrlResult] = useState<string | null>(null);
   // State to manage loading status during API call
   const [isLoading, setIsLoading] = useState(false);
+  // State to show a copy success message
+  const [copyMessage, setCopyMessage] = useState<string | null>(null);
 
   const handleGenerateClick = async () => {
-    // Check if the input is empty
     if (!longUrl) {
       setShortUrlResult('Please enter a URL first.');
       return;
     }
 
-    // Set loading state and clear previous results
     setIsLoading(true);
     setShortUrlResult(null);
 
     try {
-      // Make a POST request to the API Gateway endpoint
       const response = await fetch('https://itsurl.com/shorten', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ originalUrl: longUrl }), // Send the long URL as "originalUrl"
+        body: JSON.stringify({ originalUrl: longUrl }),
       });
 
-      // Check if the response is successful
       if (!response.ok) {
         throw new Error('Failed to shorten URL. Please try again.');
       }
 
-      // Parse the JSON response and extract the shortened URL
       const data = await response.json();
-      setShortUrlResult(`Generated: ${data.shortUrl}`); // Display the shortened URL
+      setShortUrlResult(data.shortUrl); // Directly store the shortened URL
     } catch (error) {
-      // Handle any errors (network issues, invalid URL, etc.)
       setShortUrlResult((error as Error).message || 'An error occurred while shortening the URL.');
     } finally {
-      // Reset loading state and clear the input field
       setIsLoading(false);
-      setLongUrl(''); // Clear the input after success or failure
     }
   };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    alert('Copied to clipboard!');
+    navigator.clipboard.writeText(text).then(() => {
+      setCopyMessage('Copied to clipboard!');
+      setTimeout(() => setCopyMessage(null), 2000); // Clear message after 2 seconds
+    });
   };
 
   return (
@@ -86,21 +82,24 @@ export default function HomePage() {
             <p className="text-green-700 font-bold">Your shortened URL is ready!</p>
             <div className="flex items-center justify-between mt-2">
               <a
-                href={shortUrlResult.replace('Generated: ', '')}
+                href={shortUrlResult}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 underline"
               >
-                {shortUrlResult.replace('Generated: ', '')}
+                {shortUrlResult}
               </a>
               <button
-                onClick={() => copyToClipboard(shortUrlResult.replace('Generated: ', ''))}
+                onClick={() => copyToClipboard(shortUrlResult)}
                 className="ml-2 text-gray-500 hover:text-gray-700"
               >
                 📋
               </button>
             </div>
           </div>
+        )}
+        {copyMessage && (
+          <p className="mt-2 text-sm text-green-600">{copyMessage}</p>
         )}
       </div>
     </main>
