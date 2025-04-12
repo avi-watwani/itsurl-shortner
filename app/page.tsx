@@ -49,6 +49,11 @@ export default function HomePage() {
     }
   };
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    alert('Copied to clipboard!');
+  };
+
   return (
     <main className="container mx-auto p-4">
       <div className="border border-gray-300 rounded-md p-4 w-[70%] mx-auto">
@@ -78,7 +83,23 @@ export default function HomePage() {
         </form>
         {shortUrlResult && (
           <div className="mt-4 p-4 bg-green-100 rounded-md">
-            <p className="text-green-700">{shortUrlResult}</p>
+            <p className="text-green-700 font-bold">Your shortened URL is ready!</p>
+            <div className="flex items-center justify-between mt-2">
+              <a
+                href={shortUrlResult.replace('Generated: ', '')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
+              >
+                {shortUrlResult.replace('Generated: ', '')}
+              </a>
+              <button
+                onClick={() => copyToClipboard(shortUrlResult.replace('Generated: ', ''))}
+                className="ml-2 text-gray-500 hover:text-gray-700"
+              >
+                📋
+              </button>
+            </div>
           </div>
         )}
       </div>
