@@ -83,18 +83,42 @@ export default function HomePage() {
         {shortUrlResult && (
           <div className="mt-4 p-4 bg-green-100 rounded-md">
             <p className="text-green-700 font-bold">Your shortened URL is ready!</p>
-            <div className="flex items-center justify-between mt-2">
+            <div className="flex items-center mt-2">
+              <div className="flex items-center space-x-2">
+                <a
+                  href={shortUrlResult}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  {shortUrlResult}
+                </a>
+                <button
+                  onClick={() => copyToClipboard(shortUrlResult)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <FiCopy size={16} /> {/* Use the standard copy icon */}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        {shortUrlResult && (
+          <div className="mt-4 p-4 bg-gray-100 rounded-md">
+            <p className="text-gray-600 font-bold">Original URL</p>
+            <div className="flex items-start mt-2 space-x-2">
               <a
-                href={shortUrlResult}
+                href={longUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 underline"
+                className="text-blue-600 underline break-words flex-1"
+                style={{ wordBreak: 'break-word' }} // Ensure long URLs wrap to the next line
               >
-                {shortUrlResult}
+                {longUrl}
               </a>
               <button
-                onClick={() => copyToClipboard(shortUrlResult)}
-                className="ml-2 text-gray-500 hover:text-gray-700"
+                onClick={() => copyToClipboard(longUrl)}
+                className="text-gray-500 hover:text-gray-700"
               >
                 <FiCopy size={16} /> {/* Use the standard copy icon */}
               </button>
