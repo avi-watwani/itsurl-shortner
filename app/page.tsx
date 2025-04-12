@@ -1,6 +1,6 @@
 'use client'; // Required for using hooks like useState
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FiCopy } from 'react-icons/fi'; // Import the copy icon from React Icons
 import HeroSection from './components/HeroSection'; // Import the HeroSection component
 
@@ -13,7 +13,8 @@ export default function HomePage() {
   // State to manage loading status during API call
   const [isLoading, setIsLoading] = useState(false);
   // State to show a copy success message
-  const [copyMessage, setCopyMessage] = useState<string | null>(null);
+  const [copyMessageforShortUrlResult, setCopyMessageforShortUrlResult] = useState<string | null>(null);
+  const [copyMessageforLongUrlCached, setCopyMessageforLongUrlCached] = useState<string | null>(null);
 
   const handleGenerateClick = async () => {
     if (!longUrl) {
@@ -48,12 +49,28 @@ export default function HomePage() {
     }
   };
 
-  const copyToClipboard = (text: string) => {
+  const copyShortUrlResultToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      setCopyMessage('Copied to clipboard!');
-      setTimeout(() => setCopyMessage(null), 2000); // Clear message after 2 seconds
+      setCopyMessageforShortUrlResult('Copied to clipboard!');
+      setTimeout(() => setCopyMessageforShortUrlResult(null), 3000); // Clear message after 3 seconds
     });
   };
+
+  const copyLongUrlCachedToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopyMessageforLongUrlCached('Copied to clipboard!');
+      setTimeout(() => setCopyMessageforLongUrlCached(null), 3000); // Clear message after 3 seconds
+    });
+  };
+
+  useEffect(() => {
+    if (shortUrlResult) {
+      const resultSection = document.getElementById('result-section');
+      if (resultSection) {
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [shortUrlResult]);
 
   return (
     <main className="mx-auto">
@@ -83,54 +100,60 @@ export default function HomePage() {
             {isLoading ? 'Shortening...' : 'Shorten URL'}
           </button>
         </form>
-        {shortUrlResult && (
-          <div className="mt-4 p-4 bg-green-100 rounded-md">
-            <p className="text-green-700 font-bold">Your shortened URL is ready!</p>
-            <div className="flex items-center mt-2">
-              <div className="flex items-center space-x-2">
-                <a
-                  href={shortUrlResult}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline"
-                >
-                  {shortUrlResult}
-                </a>
-                <button
-                  onClick={() => copyToClipboard(shortUrlResult)}
-                  className="text-gray-500 hover:text-gray-700"
-                >
-                  <FiCopy size={16} /> {/* Use the standard copy icon */}
-                </button>
+        <div id="result-section">
+          {shortUrlResult && (
+            <div className="mt-4 p-4 bg-green-100 rounded-md">
+              <p className="text-green-700 font-bold">Your shortened URL is ready!</p>
+              <div className="flex items-center mt-2">
+                <div className="flex items-center space-x-2">
+                  <a
+                    href={shortUrlResult}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline"
+                  >
+                    {shortUrlResult}
+                  </a>
+                  <button
+                    onClick={() => copyShortUrlResultToClipboard(shortUrlResult)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <FiCopy size={16} /> {/* Use the standard copy icon */}
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        {longUrlCached && (
-          <div className="mt-4 p-4 bg-gray-100 rounded-md">
-            <p className="text-gray-600 font-bold">Original URL</p>
-            <div className="flex items-start mt-2 space-x-2">
-              <a
-                href={longUrlCached}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 underline break-words flex-1"
-                style={{ wordBreak: 'break-word' }} // Ensure long URLs wrap to the next line
-              >
-                {longUrlCached}
-              </a>
-              <button
-                onClick={() => copyToClipboard(longUrlCached)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <FiCopy size={16} /> {/* Use the standard copy icon */}
-              </button>
+          )}
+          {copyMessageforShortUrlResult && (
+            <p className="mt-2 text-sm text-green-600">{copyMessageforShortUrlResult}</p>
+          )}
+          {longUrlCached && (
+            <div className="mt-4 p-4 bg-gray-100 rounded-md">
+              <p className="text-gray-600 font-bold">Original URL</p>
+              <div className="flex items-center mt-2">
+                <div className="flex items-center space-x-2">
+                  <a
+                    href={longUrlCached}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline"
+                  >
+                    {longUrlCached}
+                  </a>
+                  <button
+                    onClick={() => copyLongUrlCachedToClipboard(longUrlCached)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <FiCopy size={16} /> {/* Use the standard copy icon */}
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        )}
-        {copyMessage && (
-          <p className="mt-2 text-sm text-green-600">{copyMessage}</p>
-        )}
+          )}
+          {copyMessageforLongUrlCached && (
+            <p className="mt-2 text-sm text-green-600">{copyMessageforLongUrlCached}</p>
+          )}
+        </div>
       </div>
       <footer className="mt-12 bg-gray-800 text-white py-4 text-center">
         <p className="text-sm">
