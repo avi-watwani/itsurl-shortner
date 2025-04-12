@@ -6,9 +6,10 @@ import HeroSection from './components/HeroSection'; // Import the HeroSection co
 
 export default function HomePage() {
   // State to hold the long URL entered by the user
-  const [longUrl, setLongUrl] = useState('');
+  const [longUrl, setLongUrl] = useState<string | null>('');
   // State to hold the generated short URL (or error messages)
   const [shortUrlResult, setShortUrlResult] = useState<string | null>(null);
+  const [longUrlCached, setLongUrlCached] = useState('');
   // State to manage loading status during API call
   const [isLoading, setIsLoading] = useState(false);
   // State to show a copy success message
@@ -38,6 +39,8 @@ export default function HomePage() {
 
       const data = await response.json();
       setShortUrlResult(data.shortUrl); // Directly store the shortened URL
+      setLongUrlCached(longUrl); // Store the original URL for display
+      setLongUrl(''); // Clear the input field
     } catch (error) {
       setShortUrlResult((error as Error).message || 'An error occurred while shortening the URL.');
     } finally {
@@ -65,7 +68,7 @@ export default function HomePage() {
             <input
               type="url"
               id="longUrl"
-              value={longUrl}
+              value={longUrl || ''}
               onChange={(e) => setLongUrl(e.target.value)}
               placeholder="https://example.com/very/long/url/that/needs/shortening"
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
@@ -103,21 +106,21 @@ export default function HomePage() {
             </div>
           </div>
         )}
-        {shortUrlResult && (
+        {longUrlCached && (
           <div className="mt-4 p-4 bg-gray-100 rounded-md">
             <p className="text-gray-600 font-bold">Original URL</p>
             <div className="flex items-start mt-2 space-x-2">
               <a
-                href={longUrl}
+                href={longUrlCached}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 underline break-words flex-1"
                 style={{ wordBreak: 'break-word' }} // Ensure long URLs wrap to the next line
               >
-                {longUrl}
+                {longUrlCached}
               </a>
               <button
-                onClick={() => copyToClipboard(longUrl)}
+                onClick={() => copyToClipboard(longUrlCached)}
                 className="text-gray-500 hover:text-gray-700"
               >
                 <FiCopy size={16} /> {/* Use the standard copy icon */}
@@ -129,6 +132,11 @@ export default function HomePage() {
           <p className="mt-2 text-sm text-green-600">{copyMessage}</p>
         )}
       </div>
+      <footer className="mt-12 bg-gray-800 text-white py-4 text-center">
+        <p className="text-sm">
+          © {new Date().getFullYear()} itsURL Pvt. Ltd. All rights reserved.
+        </p>
+      </footer>
     </main>
   );
 }
