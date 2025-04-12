@@ -1,6 +1,7 @@
 'use client'; // Required for using hooks like useState
 
 import { useState } from 'react';
+import HeroSection from './components/HeroSection'; // Import the HeroSection component
 
 export default function HomePage() {
   // State to hold the long URL entered by the user
@@ -51,8 +52,9 @@ export default function HomePage() {
   };
 
   return (
-    <main className="container mx-auto p-4">
-      <div className="border border-gray-300 rounded-md p-16 w-[70%] mx-auto">
+    <main className="mx-auto">
+      <HeroSection /> {/* Add the HeroSection component here */}
+      <div className="border border-gray-300 rounded-md p-16 w-[70%] mx-auto mt-12">
         <h1 className="text-2xl font-bold mb-8">Shorten Your URL</h1>
         <form className="space-y-4">
           <div>
