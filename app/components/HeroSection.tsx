@@ -2,8 +2,14 @@ export default function HeroSection() {
   const scrollToForm = () => {
     const formElement = document.getElementById('shorten-form');
     if (formElement) {
-      formElement.scrollIntoView({ behavior: 'smooth' });
-      formElement.querySelector('input')?.focus();
+      const offset = window.innerWidth < 640 ? -100 : 0; // Add offset for mobile devices
+      const yPosition = formElement.getBoundingClientRect().top + window.scrollY + offset;
+      window.scrollTo({ top: yPosition, behavior: 'smooth' });
+
+      // Focus the input not on small screens
+      if (window.innerWidth > 640) {
+        formElement.querySelector('input')?.focus();
+      }
     }
   };
 
@@ -16,23 +22,23 @@ export default function HeroSection() {
 
   return (
     <section
-      className="w-full h-[100vh] bg-cover bg-center text-white flex flex-col items-center justify-center text-center"
+      className="w-full h-[70vh] sm:h-[100vh] bg-cover bg-center text-white flex flex-col items-center justify-center text-center px-4"
       style={{ backgroundImage: "url('/images/background.jpeg')" }}
     >
-      <h1 className="text-5xl font-bold mb-4">Make your links shorter and smarter</h1>
-      <p className="text-lg mb-8">
+      <h1 className="text-3xl sm:text-5xl font-bold mb-4">Make your links shorter and smarter</h1>
+      <p className="text-sm sm:text-lg mb-8">
         Transform long, unwieldy links into short, memorable URLs that drive more clicks and track better
       </p>
-      <div className="space-x-4">
+      <div className="space-y-2 sm:space-y-0 sm:space-x-4 flex flex-col sm:flex-row">
         <button
           onClick={scrollToForm}
-          className="bg-white text-blue-500 py-2 px-4 rounded-md font-medium hover:bg-gray-100"
+          className="bg-white text-blue-500 py-2 px-4 rounded-md font-medium hover:bg-gray-100 text-sm sm:text-base"
         >
           Start Shortening!
         </button>
         <button
           onClick={scrollToUrlShortnerInfo}
-          className="border border-white py-2 px-4 rounded-md font-medium hover:bg-blue-600"
+          className="border border-white py-2 px-4 rounded-md font-medium hover:bg-blue-600 text-sm sm:text-base"
         >
           Learn More
         </button>
