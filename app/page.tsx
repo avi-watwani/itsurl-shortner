@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FiCopy } from 'react-icons/fi'; // Import the copy icon from React Icons
 import HeroSection from './components/HeroSection'; // Import the HeroSection component
+import UrlShortenerInfo from './components/UrlShortenerInfo'; // Import the new component
 
 export default function HomePage() {
   // State to hold the long URL entered by the user
@@ -155,6 +156,7 @@ export default function HomePage() {
           )}
         </div>
       </div>
+      <UrlShortenerInfo /> {/* Add the new component here */}
       <footer className="mt-12 bg-gray-800 text-white py-4 text-center">
         <p className="text-sm">
           © {new Date().getFullYear()} itsURL Pvt. Ltd. All rights reserved.

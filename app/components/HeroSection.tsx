@@ -7,6 +7,13 @@ export default function HeroSection() {
     }
   };
 
+  const scrollToUrlShortnerInfo = () => {
+    const infoElement = document.getElementById('what-is-url-shortener');
+    if (infoElement) {
+      infoElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section
       className="w-full h-[100vh] bg-cover bg-center text-white flex flex-col items-center justify-center text-center"
@@ -23,7 +30,10 @@ export default function HeroSection() {
         >
           Start Shortening!
         </button>
-        <button className="border border-white py-2 px-4 rounded-md font-medium hover:bg-blue-600">
+        <button
+          onClick={scrollToUrlShortnerInfo}
+          className="border border-white py-2 px-4 rounded-md font-medium hover:bg-blue-600"
+        >
           Learn More
         </button>
       </div>
