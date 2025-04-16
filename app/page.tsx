@@ -49,18 +49,43 @@ export default function HomePage() {
     }
   };
 
+  const copyToClipboard = (text: string, setMessage: (message: string | null) => void) => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        setMessage('Copied to clipboard!');
+        setTimeout(() => setMessage(null), 3000); // Clear message after 3 seconds
+      }).catch(() => {
+        fallbackCopyToClipboard(text, setMessage);
+      });
+    } else {
+      fallbackCopyToClipboard(text, setMessage);
+    }
+  };
+
+  const fallbackCopyToClipboard = (text: string, setMessage: (message: string | null) => void) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed'; // Prevent scrolling to the bottom
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      setMessage('Copied to clipboard!');
+      setTimeout(() => setMessage(null), 3000); // Clear message after 3 seconds
+    } catch (err) {
+      setMessage('Failed to copy!');
+    }
+    document.body.removeChild(textArea);
+  };
+
   const copyShortUrlResultToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopyMessageforShortUrlResult('Copied to clipboard!');
-      setTimeout(() => setCopyMessageforShortUrlResult(null), 3000); // Clear message after 3 seconds
-    });
+    copyToClipboard(text, setCopyMessageforShortUrlResult);
   };
 
   const copyLongUrlCachedToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopyMessageforLongUrlCached('Copied to clipboard!');
-      setTimeout(() => setCopyMessageforLongUrlCached(null), 3000); // Clear message after 3 seconds
-    });
+    copyToClipboard(text, setCopyMessageforLongUrlCached);
   };
 
   useEffect(() => {
