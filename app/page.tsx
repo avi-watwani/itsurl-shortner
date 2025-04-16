@@ -19,7 +19,6 @@ export default function HomePage() {
 
   const handleGenerateClick = async () => {
     if (!longUrl) {
-      setShortUrlResult('Please enter a URL first.');
       return;
     }
 
@@ -44,7 +43,7 @@ export default function HomePage() {
       setLongUrlCached(longUrl); // Store the original URL for display
       setLongUrl(''); // Clear the input field
     } catch (error) {
-      setShortUrlResult((error as Error).message || 'An error occurred while shortening the URL.');
+      setShortUrlResult('An error occurred while shortening the URL.');
     } finally {
       setIsLoading(false);
     }
@@ -132,8 +131,8 @@ export default function HomePage() {
             <div className="mt-4 p-3 sm:p-4 bg-gray-100 rounded-md">
               <p className="text-gray-600 font-bold text-sm sm:text-base">Original URL</p>
               <div className="flex items-center mt-2">
-                <div className="flex items-center space-x-2">
-                  <div className="max-w-[200px] sm:max-w-[300px] overflow-hidden whitespace-nowrap text-ellipsis flex items-center">
+                <div className="flex items-center space-x-2 w-full">
+                  <div className="max-w-[95%] overflow-hidden whitespace-nowrap text-ellipsis flex items-center">
                     <a
                     href={longUrlCached}
                     target="_blank"
