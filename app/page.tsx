@@ -138,15 +138,15 @@ export default function HomePage() {
                       href={longUrlCached}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 underline text-sm sm:text-base flex-shrink-0 break-words"
+                      className="text-blue-600 underline text-sm sm:text-base break-words"
                     >
                       {longUrlCached}
                     </a>
                     <button
                       onClick={() => copyLongUrlCachedToClipboard(longUrlCached)}
-                      className="ml-2 text-gray-500 hover:text-gray-700 flex-shrink-0"
+                      className="ml-2 text-gray-500 hover:text-gray-700"
                     >
-                      <FiCopy size={14} className="sm:w-4 sm:h-4" /> {/* Adjust icon size */}
+                      <FiCopy size={14} className="sm:w-4 sm:h-4" /> {/* Copy button for Original URL */}
                     </button>
                   </div>
                 </div>
