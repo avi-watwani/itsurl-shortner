@@ -66,9 +66,9 @@ export default function HomePage() {
 
   useEffect(() => {
     if (shortUrlResult) {
-      const resultSection = document.getElementById('result-section');
-      if (resultSection) {
-        resultSection.scrollIntoView({ behavior: 'smooth' });
+      const formElement = document.getElementById('shorten-form');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth' });
       }
     }
   }, [shortUrlResult]);
