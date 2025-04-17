@@ -118,14 +118,14 @@ export default function HomePage() {
               value={longUrl || ''}
               onChange={(e) => setLongUrl(e.target.value)}
               placeholder="https://example.com/very/long/url/that/needs/shortening"
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 sm:p-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-base sm:text-base" // Set font size to at least 16px
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 sm:p-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-base sm:text-base" // Set font size to at least 16px
             />
             <br />
             <label htmlFor="customShortUrl" className="block text-sm sm:text-base font-medium text-white mb-1">
               Set Custom Short URL (optional)
             </label>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-4">
-              <label htmlFor="customShortUrl" className="text-sm sm:text-base font-medium text-white">
+            <div className="flex items-center space-x-2 mt-2 w-full">
+              <label htmlFor="customShortUrl" className="text-sm sm:text-base font-medium text-white flex-shrink-0">
                 https://itsurl.com/
               </label>
               <input
@@ -144,7 +144,7 @@ export default function HomePage() {
                   }
                 }}
                 placeholder="Custom alias (optional)"
-                className="w-60 rounded-lg border border-gray-300 bg-gray-50 p-2 sm:p-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-base sm:text-base"
+                className="flex-grow min-w-0 max-w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 sm:p-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm sm:text-base"
               />
             </div>
             {invalidMessage && <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-4">
