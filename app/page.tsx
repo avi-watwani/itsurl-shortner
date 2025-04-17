@@ -8,6 +8,7 @@ import UrlShortenerInfo from './components/UrlShortenerInfo'; // Import the new 
 export default function HomePage() {
   // State to hold the long URL entered by the user
   const [longUrl, setLongUrl] = useState<string | null>('');
+  const [customShortUrl, setCustomShortUrl] = useState<string | null>('');
   // State to hold the generated short URL (or error messages)
   const [shortUrlResult, setShortUrlResult] = useState<string | null>(null);
   const [longUrlCached, setLongUrlCached] = useState('');
@@ -31,7 +32,7 @@ export default function HomePage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ originalUrl: longUrl }),
+        body: JSON.stringify({ originalUrl: longUrl, customShortUrl: customShortUrl }),
       });
 
       if (!response.ok) {
@@ -115,6 +116,23 @@ export default function HomePage() {
               placeholder="https://example.com/very/long/url/that/needs/shortening"
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 sm:p-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-base sm:text-base" // Set font size to at least 16px
             />
+            <br />
+            <label htmlFor="customShortUrl" className="block text-sm sm:text-base font-medium text-white mb-1">
+              Set Custom Short URL (optional)
+            </label>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-4">
+              <label htmlFor="customShortUrl" className="text-sm sm:text-base font-medium text-white">
+                https://itsurl.com/
+              </label>
+              <input
+                type="text"
+                id="customShortUrl"
+                value={customShortUrl || ''}
+                onChange={(e) => setCustomShortUrl(e.target.value)}
+                placeholder="Custom alias (optional)"
+                className="w-60 rounded-lg border border-gray-300 bg-gray-50 p-2 sm:p-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-base sm:text-base"
+              />
+            </div>
           </div>
           <button
             type="button"
