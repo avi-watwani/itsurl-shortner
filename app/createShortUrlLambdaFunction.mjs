@@ -44,6 +44,54 @@ export const handler = async (event) => {
         headers: { "Content-Type": "application/json" }
       };
     }
+    if (customShortCode) {
+        // Check if the customShortCode already exists
+        const checkParams = {
+            TableName: tableName,
+            Key: { shortCode: customShortCode },
+        };
+        const checkResult = await docClient.send(new GetCommand(checkParams));
+
+        if (checkResult.Item) {
+            console.error(`Custom shortCode '${customShortCode}' already exists.`);
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: "Custom shortCode already exists. Please choose a different one." }),
+                headers: { "Content-Type": "application/json" }
+            };
+        }
+
+        // Save the customShortCode
+        const putParams = {
+            TableName: tableName,
+            Item: {
+                shortCode: customShortCode,
+                originalUrl: originalUrl,
+                createdAt: new Date().toISOString(),
+            },
+            ConditionExpression: "attribute_not_exists(shortCode)"
+        };
+
+        console.log(`Attempting to save customShortCode: ${customShortCode} -> ${originalUrl}`);
+        await docClient.send(new PutCommand(putParams));
+
+        const fullShortUrl = `https://itsurl.com/${customShortCode}`;
+        return {
+            statusCode: 201,
+            body: JSON.stringify({
+                message: "URL shortened successfully!",
+                shortUrl: fullShortUrl,
+                shortCode: customShortCode,
+                originalUrl: originalUrl
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token"
+            }
+        };
+    }
   } catch (error) {
     console.error("Error parsing request body:", error);
     return {

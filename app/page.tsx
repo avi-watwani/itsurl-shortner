@@ -8,7 +8,7 @@ import UrlShortenerInfo from './components/UrlShortenerInfo'; // Import the new 
 export default function HomePage() {
   // State to hold the long URL entered by the user
   const [longUrl, setLongUrl] = useState<string | null>('');
-  const [customShortUrl, setCustomShortUrl] = useState<string | null>('');
+  const [customShortCode, setCustomShortCode] = useState<string | null>('');
   // State to hold the generated short URL (or error messages)
   const [shortUrlResult, setShortUrlResult] = useState<string | null>(null);
   const [longUrlCached, setLongUrlCached] = useState('');
@@ -32,7 +32,7 @@ export default function HomePage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ originalUrl: longUrl, customShortUrl: customShortUrl }),
+        body: JSON.stringify({ originalUrl: longUrl, customShortCode: customShortCode }),
       });
 
       if (!response.ok) {
@@ -127,8 +127,8 @@ export default function HomePage() {
               <input
                 type="text"
                 id="customShortUrl"
-                value={customShortUrl || ''}
-                onChange={(e) => setCustomShortUrl(e.target.value)}
+                value={customShortCode || ''}
+                onChange={(e) => setCustomShortCode(e.target.value)}
                 placeholder="Custom alias (optional)"
                 className="w-60 rounded-lg border border-gray-300 bg-gray-50 p-2 sm:p-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-base sm:text-base"
               />
