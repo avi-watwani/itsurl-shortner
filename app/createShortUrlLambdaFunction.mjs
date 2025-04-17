@@ -45,6 +45,15 @@ export const handler = async (event) => {
       };
     }
     if (customShortCode) {
+      const isValid = /^[a-zA-Z0-9!@#$%&*-_?]{0,10}$/.test(customShortCode);
+        if (!isValid) {
+          console.error("Validation Error: Invalid customShortCode provided.");
+          return {
+            statusCode: 400,
+            body: JSON.stringify({ message: "Invalid customShortCode format. Must be alphanumeric or include allowed special characters (!@#$%&*-_?) and up to 10 characters long." }),
+            headers: { "Content-Type": "application/json" }
+          };
+        }
         // Check if the customShortCode already exists
         const checkParams = {
             TableName: tableName,
