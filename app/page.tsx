@@ -15,6 +15,7 @@ export default function HomePage() {
   // State to manage loading status during API call
   const [isLoading, setIsLoading] = useState(false);
   const [invalidMessage, setInvalidMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   // State to show a copy success message
   const [copyMessageforShortUrlResult, setCopyMessageforShortUrlResult] = useState<string | null>(null);
   const [copyMessageforLongUrlCached, setCopyMessageforLongUrlCached] = useState<string | null>(null);
@@ -47,7 +48,7 @@ export default function HomePage() {
       setLongUrl(''); // Clear the input field
       setCustomShortCode(''); // Clear the input field
     } catch (error) {
-      setShortUrlResult('An error occurred while shortening the URL.');
+      setErrorMessage('An error occurred while shortening the URL. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -162,6 +163,11 @@ export default function HomePage() {
           </button>
         </form>
         <div id="result-section">
+          {errorMessage && (
+            <div className="mt-4 p-3 sm:p-4 bg-red-100 rounded-md">
+              <p className="text-red-700 font-bold text-sm sm:text-base">{errorMessage}</p>
+            </div>
+          )}
           {shortUrlResult && (
             <div className="mt-4 p-3 sm:p-4 bg-green-100 rounded-md">
               <p className="text-green-700 font-bold text-sm sm:text-base">Your shortened URL is ready!</p>
