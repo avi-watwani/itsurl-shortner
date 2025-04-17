@@ -45,15 +45,23 @@ export const handler = async (event) => {
       };
     }
     if (customShortCode) {
-      const isValid = /^[a-zA-Z0-9!@#$%&*-_?]{0,10}$/.test(customShortCode);
-        if (!isValid) {
+      // Validate the custom short code format
+      const isValid = /^[a-zA-Z0-9!@#$%&*-_?]{1,10}$/.test(customShortCode);
+      if (!isValid) {
           console.error("Validation Error: Invalid customShortCode provided.");
           return {
             statusCode: 400,
-            body: JSON.stringify({ message: "Invalid customShortCode format. Must be alphanumeric or include allowed special characters (!@#$%&*-_?) and up to 10 characters long." }),
-            headers: { "Content-Type": "application/json" }
+            body: JSON.stringify({
+                message: "Invalid customShortCode format. It must be 1 to 10 characters long, alphanumeric, or include allowed special characters (!@#$%&*-_?)."
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*", // Allow requests from any origin
+                "Access-Control-Allow-Methods": "POST, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token"
+            }
           };
-        }
+      } else {
         // Check if the customShortCode already exists
         const checkParams = {
             TableName: tableName,
@@ -101,6 +109,7 @@ export const handler = async (event) => {
             }
         };
     }
+  }
   } catch (error) {
     console.error("Error parsing request body:", error);
     return {
