@@ -14,6 +14,7 @@ export default function HomePage() {
   const [longUrlCached, setLongUrlCached] = useState('');
   // State to manage loading status during API call
   const [isLoading, setIsLoading] = useState(false);
+  const [invalidMessage, setInvalidMessage] = useState(false);
   // State to show a copy success message
   const [copyMessageforShortUrlResult, setCopyMessageforShortUrlResult] = useState<string | null>(null);
   const [copyMessageforLongUrlCached, setCopyMessageforLongUrlCached] = useState<string | null>(null);
@@ -42,7 +43,9 @@ export default function HomePage() {
       const data = await response.json();
       setShortUrlResult(data.shortUrl); // Directly store the shortened URL
       setLongUrlCached(longUrl); // Store the original URL for display
+
       setLongUrl(''); // Clear the input field
+      setCustomShortCode(''); // Clear the input field
     } catch (error) {
       setShortUrlResult('An error occurred while shortening the URL.');
     } finally {
@@ -128,11 +131,26 @@ export default function HomePage() {
                 type="text"
                 id="customShortUrl"
                 value={customShortCode || ''}
-                onChange={(e) => setCustomShortCode(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Validate max length, no spaces, and allowed characters
+                  const isValid = /^[a-zA-Z0-9!@#$%&*-_?]{0,10}$/.test(value);
+                  if (isValid) {
+                    setCustomShortCode(value);
+                  } else {
+                    setInvalidMessage(true);
+                    setTimeout(() => setInvalidMessage(false), 3000); // Clear message after 3 seconds
+                  }
+                }}
                 placeholder="Custom alias (optional)"
                 className="w-60 rounded-lg border border-gray-300 bg-gray-50 p-2 sm:p-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-base sm:text-base"
               />
             </div>
+            {invalidMessage && <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-4">
+              <p className="text-xs text-red-400">
+                Max 10 characters. Allowed: a-z, A-Z, 0-9, -, _, !, @, #, $, %, &, *, -, _, ?, no spaces.
+              </p>
+            </div>}
           </div>
           <button
             type="button"
