@@ -24,3 +24,43 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: var(--background);
+  color: var(--foreground);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+nav .logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+nav .logo img {
+  height: 30px;
+  margin-right: 0.5rem;
+}
+
+nav .toggle-button {
+  background: none;
+  border: 1px solid var(--foreground);
+  color: var(--foreground);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+nav .toggle-button:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
