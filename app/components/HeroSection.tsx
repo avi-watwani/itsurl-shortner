@@ -22,7 +22,7 @@ export default function HeroSection() {
 
   return (
     <section
-      className="w-full h-[70vh] sm:h-[100vh] bg-cover bg-center text-white flex flex-col items-center justify-center text-center px-4"
+      className="w-full h-[100vh] bg-cover bg-center text-white flex flex-col items-center justify-center text-center px-4"
       style={{ backgroundImage: "url('/images/background.png')" }}
     >
       <h1 className="text-3xl sm:text-5xl font-bold mb-4">Make your links shorter and smarter</h1>

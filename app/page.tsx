@@ -109,7 +109,7 @@ export default function HomePage() {
         <h1 className="text-xl sm:text-2xl font-bold mb-8">Shorten Your URL</h1>
         <form className="space-y-4">
           <div>
-            <label htmlFor="longUrl" className="block text-sm sm:text-base font-medium text-white mb-1">
+            <label htmlFor="longUrl" className="block text-sm sm:text-base font-medium mb-1">
               Enter a long URL
             </label>
             <input
@@ -121,11 +121,11 @@ export default function HomePage() {
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 sm:p-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-base sm:text-base" // Set font size to at least 16px
             />
             <br />
-            <label htmlFor="customShortUrl" className="block text-sm sm:text-base font-medium text-white mb-1">
+            <label htmlFor="customShortUrl" className="block text-sm sm:text-base font-medium mb-1">
               Set Custom Short URL (optional)
             </label>
             <div className="flex items-center space-x-2 mt-2 w-full">
-              <label htmlFor="customShortUrl" className="text-sm sm:text-base font-medium text-white flex-shrink-0">
+              <label htmlFor="customShortUrl" className="text-sm sm:text-base font-medium flex-shrink-0">
                 https://itsurl.com/
               </label>
               <input
