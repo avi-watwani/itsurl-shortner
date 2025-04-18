@@ -1,7 +1,7 @@
 'use client'; // Required for using hooks like useState
 
 import { useState, useEffect } from 'react';
-import { FiCopy } from 'react-icons/fi'; // Import the copy icon from React Icons
+import { FiCopy, FiSun, FiMoon } from 'react-icons/fi'; // Import icons for light and dark mode
 import HeroSection from './components/HeroSection'; // Import the HeroSection component
 import UrlShortenerInfo from './components/UrlShortenerInfo'; // Import the new component
 
@@ -19,6 +19,7 @@ export default function HomePage() {
   // State to show a copy success message
   const [copyMessageforShortUrlResult, setCopyMessageforShortUrlResult] = useState<string | null>(null);
   const [copyMessageforLongUrlCached, setCopyMessageforLongUrlCached] = useState<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(false); // State to track the current theme
 
   const handleGenerateClick = async () => {
     if (!longUrl) {
@@ -102,6 +103,21 @@ export default function HomePage() {
     }
   }, [shortUrlResult]);
 
+  const toggleTheme = () => {
+    const root = document.documentElement;
+    const currentTheme =
+      root.style.getPropertyValue('--background') === '#ffffff' ? 'light' : 'dark';
+    if (currentTheme === 'light') {
+      root.style.setProperty('--background', '#0a0a0a');
+      root.style.setProperty('--foreground', '#ededed');
+      setIsDarkMode(true);
+    } else {
+      root.style.setProperty('--background', '#ffffff');
+      root.style.setProperty('--foreground', '#171717');
+      setIsDarkMode(false);
+    }
+  };
+
   return (
     <>
       <header>
@@ -125,23 +141,11 @@ export default function HomePage() {
             <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>itsURL Shortner</span>
           </div>
           <button
-            className="toggle-button mr-8"
-            onClick={() => {
-              const root = document.documentElement;
-              const currentTheme =
-                root.style.getPropertyValue('--background') === '#ffffff'
-                  ? 'light'
-                  : 'dark';
-              if (currentTheme === 'light') {
-                root.style.setProperty('--background', '#0a0a0a');
-                root.style.setProperty('--foreground', '#ededed');
-              } else {
-                root.style.setProperty('--background', '#ffffff');
-                root.style.setProperty('--foreground', '#171717');
-              }
-            }}
+            className="toggle-button mr-8 flex items-center space-x-2"
+            onClick={toggleTheme}
           >
-            Toggle Theme
+            {isDarkMode ? <FiSun /> : <FiMoon />} {/* Icon changes based on theme */}
+            <span>{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span> {/* Text changes dynamically */}
           </button>
         </nav>
       </header>
