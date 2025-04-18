@@ -113,14 +113,19 @@ export default function HomePage() {
             position: 'sticky',
             top: 0,
             zIndex: 1000,
+            height: '8vh',
           }}
         >
-          <div className="logo">
-            <img src="/path/to/logo.png" alt="Logo" />
-            itsURL Shortner
+          <div className="logo ml-4 sm:ml-8 flex items-center space-x-2">
+            <img
+              src="/images/logo-192x192.png"
+              alt="Logo"
+              style={{ height: '2rem', width: '2rem' }}
+            />
+            <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>itsURL Shortner</span>
           </div>
           <button
-            className="toggle-button"
+            className="toggle-button mr-8"
             onClick={() => {
               const root = document.documentElement;
               const currentTheme =
