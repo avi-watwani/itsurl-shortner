@@ -189,7 +189,7 @@ export default function HomePage() {
                       setTimeout(() => setInvalidMessage(false), 3000); // Clear message after 3 seconds
                     }
                   }}
-                  placeholder="Custom alias (optional)"
+                  placeholder="Custom alias"
                   className="flex-grow min-w-0 max-w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 sm:p-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm sm:text-base"
                 />
               </div>
