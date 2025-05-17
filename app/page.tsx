@@ -218,22 +218,22 @@ export default function HomePage() {
               <div className="mt-4 p-3 sm:p-4 bg-green-100 rounded-md">
                 <p className="text-green-700 font-bold text-sm sm:text-base">Your shortened URL is ready!</p>
                 <div className="flex items-center mt-2">
-            <div className="flex items-center space-x-2">
-              <a
-                href={shortUrlResult}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 underline text-sm sm:text-base"
-              >
-                {shortUrlResult}
-              </a>
-              <button
-                onClick={() => copyShortUrlResultToClipboard(shortUrlResult)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <FiCopy size={14} className="sm:w-4 sm:h-4" /> {/* Adjust icon size */}
-              </button>
-            </div>
+                  <div className="flex items-center space-x-2">
+                    <a
+                      href={shortUrlResult}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline text-sm sm:text-base"
+                    >
+                      {shortUrlResult}
+                    </a>
+                    <button
+                      onClick={() => copyShortUrlResultToClipboard(shortUrlResult)}
+                      className="text-gray-500 hover:text-gray-700"
+                    >
+                      <FiCopy size={14} className="sm:w-4 sm:h-4" /> {/* Adjust icon size */}
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
@@ -247,26 +247,20 @@ export default function HomePage() {
                   <div className="flex items-center space-x-2 w-full">
                     <div className="max-w-[95%] overflow-hidden whitespace-nowrap text-ellipsis flex items-center">
                       <a
-                      href={longUrlCached}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 underline text-sm sm:text-base flex-shrink-0"
+                        href={longUrlCached}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 underline text-sm sm:text-base flex-shrink-0"
                       >
-                      {longUrlCached}
+                        {longUrlCached}
                       </a>
                       <button
-                      onClick={() => copyLongUrlCachedToClipboard(longUrlCached)}
-                      className="ml-2 text-gray-500 hover:text-gray-700 flex-shrink-0"
+                        onClick={() => copyLongUrlCachedToClipboard(longUrlCached)}
+                        className="ml-2 text-gray-500 hover:text-gray-700 flex-shrink-0"
                       >
-                      <FiCopy size={14} className="sm:w-4 sm:h-4" /> {/* Adjust icon size */}
+                        <FiCopy size={14} className="sm:w-4 sm:h-4" /> {/* Adjust icon size */}
                       </button>
                     </div>
-                    <button
-                      onClick={() => copyLongUrlCachedToClipboard(longUrlCached)}
-                      className="text-gray-500 hover:text-gray-700"
-                    >
-                      <FiCopy size={14} className="sm:w-4 sm:h-4" /> {/* Adjust icon size */}
-                    </button>
                   </div>
                 </div>
               </div>
