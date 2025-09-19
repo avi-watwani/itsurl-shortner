@@ -232,9 +232,12 @@ export default function HomePage() {
       </div>
       <UrlShortenerInfo /> {/* Add the new component here */}
       <footer className="mt-12 bg-gray-800 text-white py-4 text-center">
-        <p className="text-xs sm:text-sm">
-          © {new Date().getFullYear()} itsURL Pvt. Ltd. All rights reserved.
-        </p>
+          <p className="text-xs sm:text-sm mb-2">
+            Contact Us: <a href="mailto:support@itsurl.com" className="underline text-blue-300 hover:text-blue-100">support@itsurl.com</a>
+          </p>
+          <p className="text-xs sm:text-sm">
+            © {new Date().getFullYear()} itsURL Pvt. Ltd. All rights reserved.
+          </p>
       </footer>
     </main>
   );
