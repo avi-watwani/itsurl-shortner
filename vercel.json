@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/shorten",
+      "destination": "https://rl06kw3ngk.execute-api.ap-south-1.amazonaws.com/shorten"
+    },
+    {
+      "source": "/utilities/:path*",
+      "destination": "/utilities/:path*"
+    },
+    {
+      "source": "/:shortCode",
+      "destination": "https://rl06kw3ngk.execute-api.ap-south-1.amazonaws.com/:shortCode"
+    }
+  ]
+}
